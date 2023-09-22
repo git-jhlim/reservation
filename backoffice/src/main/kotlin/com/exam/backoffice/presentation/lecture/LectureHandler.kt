@@ -1,23 +1,23 @@
 package com.exam.backoffice.presentation.lecture
 
+import com.exam.backoffice.application.lecture.LectureService
 import com.exam.backoffice.presentation.lecture.model.LectureCreateRequest
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.*
+import java.lang.Exception
 
 @Component
-class LectureHandler {
+class LectureHandler(private val lectureService: LectureService) {
     suspend fun create(request: ServerRequest): ServerResponse {
         val createRequest = request.awaitBody<LectureCreateRequest>()
-//        val keyword = request.queryParamOrThrow("keyword")
-//        val sorting = request.queryParamOrNull("sorting")
-//                ?.let {
-//                    BlogSearchSort.getBy(it) ?: throw InvalidParameterException("sorting")
-//                }
-//        val page = request.queryParamToIntOrNull("page")
-//        val size = request.queryParamToIntOrNull("size")
-//
-//        val param = BlogSearchRequest.of(keyword, sorting, page, size)
-//                .also { it.valid() }
+
+        lectureService.create(createRequest.toLectureCreateModel())
         return ServerResponse.noContent().buildAndAwait()
+    }
+
+    suspend fun getAll(request: ServerRequest): ServerResponse {
+        return ServerResponse.ok().bodyValueAndAwait(
+            lectureService.getAll()
+        )
     }
 }

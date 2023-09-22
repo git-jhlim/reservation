@@ -13,7 +13,8 @@ class LectureRouter(private val lectureHandler: LectureHandler) {
     fun routeLecture(): RouterFunction<ServerResponse> {
         return coRouter {
             (accept(MediaType.APPLICATION_JSON) and "/lectures").nest {
-                GET("", lectureHandler::create)
+                POST("", lectureHandler::create)
+                GET("", lectureHandler::getAll)
             }
         }
     }

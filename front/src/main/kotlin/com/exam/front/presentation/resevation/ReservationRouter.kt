@@ -1,4 +1,4 @@
-package com.exam.front.presentation.lecture
+package com.exam.front.presentation.resevation
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -8,12 +8,12 @@ import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.coRouter
 
 @Configuration
-class LectureFrontRouter(private val lectureHandler: LectureHandler) {
+class ReservationRouter(private val reservationHandler: ReservationHandler){
     @Bean
-    fun routeFrontLecture(): RouterFunction<ServerResponse> {
+    fun routeFrontReservation(): RouterFunction<ServerResponse> {
         return coRouter {
-            (accept(MediaType.APPLICATION_JSON) and "/lectures").nest {
-                GET("", lectureHandler::search)
+            (accept(MediaType.APPLICATION_JSON) and "/reservations/").nest {
+                POST("/lectures", reservationHandler::reserveLecture)
             }
         }
     }

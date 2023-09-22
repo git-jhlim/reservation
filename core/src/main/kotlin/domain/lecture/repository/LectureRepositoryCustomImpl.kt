@@ -4,11 +4,11 @@ import common.PageResponse
 import domain.lecture.entity.Lecture
 import domain.lecture.entity.QLecture
 import domain.lecture.model.SearchParams
-import domain.lecture.repository.LectureRepositoryCustom
 import extention.atEndOfDay
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Repository
 class LectureRepositoryCustomImpl: LectureRepositoryCustom, QuerydslRepositorySupport(Lecture::class.java) {
@@ -39,5 +39,15 @@ class LectureRepositoryCustomImpl: LectureRepositoryCustom, QuerydslRepositorySu
             size = searchParams.size,
             contents = lectures,
         )
+    }
+
+    override fun existLecture(lectureNo: Int): Boolean {
+        val result = from(tbLecture)
+            .select(tbLecture.no)
+            .where(
+                tbLecture.startDateTime.after(LocalDateTime.now()),
+            ).fetchFirst()
+
+        return result != null
     }
 }

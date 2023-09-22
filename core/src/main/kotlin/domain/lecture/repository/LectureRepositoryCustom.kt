@@ -6,4 +6,5 @@ import domain.lecture.model.SearchParams
 
 interface LectureRepositoryCustom {
     fun getAvailableLectures(searchParams: SearchParams): PageResponse<Lecture>
+    fun existLecture(lectureNo: Int): Boolean
 }

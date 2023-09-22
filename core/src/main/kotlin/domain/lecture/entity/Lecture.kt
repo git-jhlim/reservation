@@ -4,6 +4,7 @@ import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity
+@Table(name = "tb_lecture")
 data class Lecture (
     @Id
     @Column(name = "lecture_no")
@@ -13,9 +14,11 @@ data class Lecture (
     val lecturer: String,
     @Column(length = 30)
     val lectureRoom: String,
-    val capacity: Int,
-    @Column(nullable = false)
-    val startDateTime: LocalDateTime,
     @Column(length = 500)
-    val summary: String = "",
+    val description: String = "",
+    val capacity: Int,
+    @Column(nullable = false, name = "start_date")
+    val startDateTime: LocalDateTime,
+    @Column(name = "register_date")
+    val registerDateTime: LocalDateTime = LocalDateTime.now(),
 )

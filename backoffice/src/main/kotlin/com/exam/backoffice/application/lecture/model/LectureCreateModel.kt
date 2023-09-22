@@ -8,13 +8,13 @@ data class LectureCreateModel (
     val lectureRoom: String,
     val capacity: Int,
     val startDateTime: LocalDateTime,
-    val summary: String,
+    val description: String,
 ) {
     fun toLecture() = Lecture(
         lecturer = lecturer,
         lectureRoom = lectureRoom,
         capacity = capacity,
         startDateTime = startDateTime,
-        summary = summary,
+        description = description,
     )
 }

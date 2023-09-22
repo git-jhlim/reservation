@@ -2,14 +2,13 @@ package com.exam.backoffice.presentation.lecture.model
 
 import com.exam.backoffice.application.lecture.model.LectureCreateModel
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 data class LectureCreateRequest(
     val lecturer: String,
     val lectureRoom: String,
     val capacity: Int,
     val startDateTime: LectureDateTime,
-    val summary: String,
+    val description: String,
 ) {
     data class LectureDateTime (
         val date: LocalDate,
@@ -23,6 +22,6 @@ data class LectureCreateRequest(
         lectureRoom = lectureRoom,
         capacity = capacity,
         startDateTime = startDateTime.toLocalDateTime(),
-        summary = summary,
+        description = description,
     )
 }

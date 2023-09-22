@@ -1,4 +1,4 @@
-package com.exam.reservation
+package com.exam.backoffice
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 @SpringBootApplication
 @ConfigurationPropertiesScan
 @EnableJpaRepositories
-class ReservationApplication
+class BackofficeApplication
 
 fun main(args: Array<String>) {
-    runApplication<ReservationApplication>(*args)
+    runApplication<BackofficeApplication>(*args)
 }

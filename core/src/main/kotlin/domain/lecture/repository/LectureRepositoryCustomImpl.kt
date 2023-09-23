@@ -3,7 +3,7 @@ package domain.lecture.repository
 import common.PageResponse
 import domain.lecture.entity.Lecture
 import domain.lecture.entity.QLecture
-import domain.lecture.model.SearchParams
+import domain.lecture.model.LectureSearchParams
 import extention.atEndOfDay
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import org.springframework.stereotype.Repository
@@ -14,7 +14,7 @@ import java.time.LocalDateTime
 class LectureRepositoryCustomImpl: LectureRepositoryCustom, QuerydslRepositorySupport(Lecture::class.java) {
     private val tbLecture = QLecture.lecture
 
-    override fun getAvailableLectures(searchParams: SearchParams): PageResponse<Lecture> {
+    override fun getAvailableLectures(searchParams: LectureSearchParams): PageResponse<Lecture> {
         val startDate = LocalDate.now().atStartOfDay()
         val endDate = LocalDate.now().plusDays(7).atEndOfDay()
 
@@ -46,6 +46,7 @@ class LectureRepositoryCustomImpl: LectureRepositoryCustom, QuerydslRepositorySu
             .select(tbLecture.no)
             .where(
                 tbLecture.startDateTime.after(LocalDateTime.now()),
+                tbLecture.no.eq(lectureNo),
             ).fetchFirst()
 
         return result != null

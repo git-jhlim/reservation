@@ -1,4 +1,4 @@
-package com.exam.front.presentation.lecture.model
+package com.exam.front.application.lecture.model
 
 import domain.lecture.entity.Lecture
 import java.time.LocalDateTime

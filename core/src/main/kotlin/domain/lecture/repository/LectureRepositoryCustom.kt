@@ -2,9 +2,9 @@ package domain.lecture.repository
 
 import common.PageResponse
 import domain.lecture.entity.Lecture
-import domain.lecture.model.SearchParams
+import domain.lecture.model.LectureSearchParams
 
 interface LectureRepositoryCustom {
-    fun getAvailableLectures(searchParams: SearchParams): PageResponse<Lecture>
+    fun getAvailableLectures(searchParams: LectureSearchParams): PageResponse<Lecture>
     fun existLecture(lectureNo: Int): Boolean
 }

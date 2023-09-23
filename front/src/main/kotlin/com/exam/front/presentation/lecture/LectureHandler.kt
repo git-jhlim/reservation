@@ -1,7 +1,7 @@
 package com.exam.front.presentation.lecture
 
 import com.exam.front.application.lecture.LectureService
-import com.exam.front.application.lecture.model.SearchModel
+import com.exam.front.application.lecture.model.LectureSearchModel
 import extention.queryParamToIntOrNull
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerRequest
@@ -15,7 +15,7 @@ class LectureHandler(private val lectureService: LectureService) {
         val size = request.queryParamToIntOrNull("size") ?: 20
 
         return ServerResponse.ok().bodyValueAndAwait(
-            lectureService.search(SearchModel(page, size))
+            lectureService.search(LectureSearchModel(page, size))
         )
     }
 }

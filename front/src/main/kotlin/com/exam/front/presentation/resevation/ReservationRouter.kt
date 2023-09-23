@@ -14,6 +14,8 @@ class ReservationRouter(private val reservationHandler: ReservationHandler){
         return coRouter {
             (accept(MediaType.APPLICATION_JSON) and "/reservations/").nest {
                 POST("/lectures", reservationHandler::reserveLecture)
+                GET("/lectures", reservationHandler::getAllRigisteredLectures)
+                DELETE("/{reservationNo}", reservationHandler::cancelLecture)
             }
         }
     }

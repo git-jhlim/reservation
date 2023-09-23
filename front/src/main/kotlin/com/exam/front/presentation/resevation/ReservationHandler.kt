@@ -3,11 +3,11 @@ package com.exam.front.presentation.resevation
 import com.exam.front.application.reservation.ReservationService
 import com.exam.front.application.reservation.model.ReservationSearchModel
 import com.exam.front.presentation.resevation.model.ReservationCreateRequest
+import exception.InvalidArgumentException
 import extention.queryParamOrThrow
 import extention.queryParamToIntOrNull
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.*
-import java.lang.RuntimeException
 
 @Component
 class ReservationHandler(private val reservationService: ReservationService){
@@ -33,7 +33,7 @@ class ReservationHandler(private val reservationService: ReservationService){
     suspend fun cancelLecture(request: ServerRequest): ServerResponse {
         val employeeId = request.queryParamOrThrow("employeeId")
         val reservationNo = request.pathVariable("reservationNo").toIntOrNull()
-            ?: throw RuntimeException("reservationNo 를 확인 해 주세요.")
+            ?: throw InvalidArgumentException("reservationNo")
         
         reservationService.cancelReservation(employeeId, reservationNo)
         return ServerResponse.noContent().buildAndAwait()

@@ -2,9 +2,9 @@ package com.exam.backoffice.presentation.lecture
 
 import com.exam.backoffice.application.lecture.LectureService
 import com.exam.backoffice.presentation.lecture.model.LectureCreateRequest
+import exception.InvalidArgumentException
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.*
-import java.lang.RuntimeException
 
 @Component
 class LectureHandler(private val lectureService: LectureService) {
@@ -23,7 +23,7 @@ class LectureHandler(private val lectureService: LectureService) {
     
     suspend fun getAudiences(request: ServerRequest): ServerResponse {
         val lectureNo = request.pathVariable("lectureNo").toIntOrNull()
-            ?: throw RuntimeException("lectureNo 를 확인 해 주세요.")
+            ?: throw InvalidArgumentException("lectureNo")
         
         return ServerResponse.ok().bodyValueAndAwait(
             lectureService.getAudiences(lectureNo)

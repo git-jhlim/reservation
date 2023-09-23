@@ -12,6 +12,6 @@ spring:
 
 logging:
   level:
-    com.exam: debug
+    com.exam: info
     org.springframework: info
     org.springframework.web: info

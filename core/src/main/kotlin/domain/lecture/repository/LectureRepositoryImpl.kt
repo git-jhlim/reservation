@@ -3,6 +3,7 @@ package domain.lecture.repository
 import common.PageResponse
 import domain.lecture.entity.Lecture
 import domain.lecture.entity.QLecture
+import domain.lecture.entity.QLectureAccumulation
 import domain.lecture.model.LectureSearchParams
 import extention.atEndOfDay
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
@@ -11,8 +12,9 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Repository
-class LectureRepositoryCustomImpl: LectureRepositoryCustom, QuerydslRepositorySupport(Lecture::class.java) {
+class LectureRepositoryImpl: LectureRepositoryCustom, QuerydslRepositorySupport(Lecture::class.java) {
     private val tbLecture = QLecture.lecture
+    private val tbAccumulation = QLectureAccumulation.lectureAccumulation
 
     override fun getAvailableLectures(searchParams: LectureSearchParams): PageResponse<Lecture> {
         val startDate = LocalDate.now().atStartOfDay()
@@ -50,5 +52,19 @@ class LectureRepositoryCustomImpl: LectureRepositoryCustom, QuerydslRepositorySu
             ).fetchFirst()
 
         return result != null
+    }
+    
+    override fun getAllOrderByReservationCnt(): List<Lecture> {
+        val startDate = LocalDate.now().atStartOfDay()
+        val endDate = LocalDate.now().plusDays(7).atEndOfDay()
+        
+        return from(tbLecture)
+            .select(tbLecture)
+            .leftJoin(tbAccumulation)
+            .on(tbLecture.no.eq(tbAccumulation.lectureNo))
+            .where(
+                tbLecture.startDateTime.between(startDate, endDate)
+            ).orderBy(tbAccumulation.popularity.desc())
+            .fetch()
     }
 }

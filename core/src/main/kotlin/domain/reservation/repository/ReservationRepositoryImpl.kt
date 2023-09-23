@@ -6,8 +6,10 @@ import domain.lecture.entity.QLecture
 import domain.reservation.entity.QReservation
 import domain.reservation.entity.Reservation
 import domain.reservation.model.RegisteredLecture
+import domain.reservation.model.ReservationCntLast3Days
 import domain.reservation.model.ReservationSearchParams
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
+import java.time.LocalDate
 
 class ReservationRepositoryImpl: ReservationRepositoryCustom, QuerydslRepositorySupport(Reservation::class.java) {
     private val tbReservation = QReservation.reservation
@@ -44,5 +46,19 @@ class ReservationRepositoryImpl: ReservationRepositoryCustom, QuerydslRepository
             size = searchParams.size,
             contents = results,
         )
+    }
+    
+    override fun getCountGroupByLectureNo(): List<ReservationCntLast3Days> {
+        return from(tbReservation)
+            .select(
+                Projections.constructor(
+                    ReservationCntLast3Days::class.java,
+                    tbReservation.lectureNo,
+                    tbReservation.lectureNo.count(),
+                )
+            ).groupBy(tbReservation.lectureNo)
+            .where(
+                tbReservation.registerDate.after(LocalDate.now().atStartOfDay())
+            ).fetch()
     }
 }

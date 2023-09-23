@@ -18,4 +18,10 @@ class LectureHandler(private val lectureService: LectureService) {
             lectureService.search(LectureSearchModel(page, size))
         )
     }
+    
+    suspend fun getByPopularity(request: ServerRequest): ServerResponse {
+        return ServerResponse.ok().bodyValueAndAwait(
+            lectureService.getByPopularity()
+        )
+    }
 }

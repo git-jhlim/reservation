@@ -14,6 +14,7 @@ class LectureRouter(private val lectureHandler: LectureHandler) {
         return coRouter {
             (accept(MediaType.APPLICATION_JSON) and "/lectures").nest {
                 GET("", lectureHandler::search)
+                GET("/get-by-popularity", lectureHandler::getByPopularity)
             }
         }
     }

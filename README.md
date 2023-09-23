@@ -1,6 +1,6 @@
 
 ### DB 구조
-CREATE TABLE `lecture`.`tb_lecture`
+CREATE TABLE `tb_lecture`
 (
     `lecture_no`         int          NOT NULL AUTO_INCREMENT COMMENT '강의 번호',
     `lecturer`           varchar(50)  NOT NULL COMMENT '강연자',
@@ -12,7 +12,7 @@ CREATE TABLE `lecture`.`tb_lecture`
     PRIMARY KEY (`lecture_no`)
 );
 
-CREATE TABLE `lecture`.`tb_lecture_reservation`
+CREATE TABLE `tb_lecture_reservation`
 (
     `reservation_no`     int          NOT NULL AUTO_INCREMENT COMMENT '예약 번호',
     `lecture_no`         int          NOT NULL COMMENT '강의 번호',
@@ -22,4 +22,11 @@ CREATE TABLE `lecture`.`tb_lecture_reservation`
     `is_canceled`          boolean     NOT NULL COMMENT '취소 여부',
     PRIMARY KEY (`reservation_no`),
     UNIQUE KEY UK_LECTURE_EMPLOYEE (`lecture_no`, `employee_id`)
+);
+
+CREATE TABLE `tb_lecture_accumulation`
+(
+    `lecture_no`         int          NOT NULL COMMENT '강의 번호',
+    `popularity`         int          NOT NULL COMMENT '이전 3일동안 강의 신청 수',
+    PRIMARY KEY (`lecture_no`)
 );

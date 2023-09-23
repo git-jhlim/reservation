@@ -1,6 +1,7 @@
 package domain.reservation.entity
 
 import jakarta.persistence.*
+import org.hibernate.annotations.Fetch
 import org.hibernate.annotations.Where
 import java.time.LocalDateTime
 
@@ -12,9 +13,15 @@ data class Reservation (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reservation_no")
     val no: Int = 0,
+    
     val lectureNo: Int,
     val employeeId: String,
     val registerDate: LocalDateTime = LocalDateTime.now(),
     val updateDate: LocalDateTime? = null,
-    val isCanceled: Boolean = false,
-)
+) {
+    private var isCanceled: Boolean = false
+    
+    fun cancel() {
+        isCanceled = true
+    }
+}

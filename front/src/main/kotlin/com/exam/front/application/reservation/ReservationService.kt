@@ -37,4 +37,15 @@ class ReservationService(
                 PageResponse.convert(pageResponse) { ReservationInfo.of(it) }
             }
     }
+    
+    @Transactional(readOnly = true)
+    suspend fun cancelReservation(employeeId: String, reservationNo: Int) {
+        val reservation = reservationRepository.findByNoAndEmployeeId(reservationNo, employeeId)
+        
+        if(reservation == null) {
+            throw RuntimeException("예약 정보를 찾을 수 없습니다.")
+        } else {
+            reservation.cancel()
+        }
+    }
 }

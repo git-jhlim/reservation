@@ -1,0 +1,6 @@
+package domain.reservation.exception
+
+import exception.CommonException
+
+class ReservationNotFoundException: CommonException(ReservationErrorCode.NOT_FOUND)
+class AlreadyReservedException: CommonException(ReservationErrorCode.ALREADY_EXIST)

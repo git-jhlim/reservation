@@ -25,7 +25,7 @@ class LectureService(
     
     @Transactional(readOnly = true)
     suspend fun getAudiences(lectureNo: Int): List<String> {
-        if(lectureRepository.existsByNo(lectureNo)) {
+        if(lectureRepository.existLecture(lectureNo)) {
             return reservationRepository.findByLectureNo(lectureNo)
                 .map { it.employeeId }
         } else throw LectureNotFoundException()

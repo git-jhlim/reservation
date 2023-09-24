@@ -4,5 +4,5 @@ import domain.lecture.entity.Lecture
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface LectureRepository : JpaRepository<Lecture, Int>, LectureRepositoryCustom {
-	fun existsByNo(lectureNo: Int): Boolean
+	fun getByNo(lectureNo: Int): Lecture?
 }

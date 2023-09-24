@@ -4,3 +4,4 @@ import exception.CommonException
 
 class ReservationNotFoundException: CommonException(ReservationErrorCode.NOT_FOUND)
 class AlreadyReservedException: CommonException(ReservationErrorCode.ALREADY_EXIST)
+class ExceededReservationException: CommonException(ReservationErrorCode.EXCEEDED_RESERVATION)

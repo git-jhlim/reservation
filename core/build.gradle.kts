@@ -25,7 +25,6 @@ dependencies {
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-//    runtimeOnly("com.h2database:h2:2.1.214")
 
     //querydsl
     implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")

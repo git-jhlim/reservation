@@ -9,6 +9,7 @@ enum class ReservationErrorCode(
 ): ErrorCode {
 	NOT_FOUND("RVCD0001", "reservationErrorCode.notFound"),
 	ALREADY_EXIST("RVCD0002", "reservationErrorCode.alreadyExist"),
+	EXCEEDED_RESERVATION("RVCD0003", "reservationErrorCode.exceededReservation"),
 	;
 	
 	override fun getMessage(arg: String?): String {

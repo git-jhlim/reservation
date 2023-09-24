@@ -7,4 +7,5 @@ interface ReservationRepository: JpaRepository<Reservation, Int>, ReservationRep
     fun findByLectureNoAndEmployeeId(lectureNo: Int, employeeId: String): Reservation?
     fun findByNoAndEmployeeId(reservationNo: Int, employeeId: String): Reservation?
     fun findByLectureNo(lectureNo: Int): List<Reservation>
+    fun countByLectureNo(lectureNo: Int): Int
 }

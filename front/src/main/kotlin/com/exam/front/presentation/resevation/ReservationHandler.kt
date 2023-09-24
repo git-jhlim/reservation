@@ -13,6 +13,7 @@ import org.springframework.web.reactive.function.server.*
 class ReservationHandler(private val reservationService: ReservationService){
     suspend fun reserveLecture(request: ServerRequest): ServerResponse {
         val createRequest = request.awaitBody<ReservationCreateRequest>()
+            .also { it.validate() }
 
         reservationService.reserveLecture(createRequest.toReservationCreateModel())
         return ServerResponse.noContent().buildAndAwait()

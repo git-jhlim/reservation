@@ -63,7 +63,7 @@ class CustomErrorAttributes: ErrorAttributes {
 				if(error.statusCode.is4xxClientError)
 					CommonErrorResponse(
 						errorCode = CommonErrorCode.BAD_REQUEST.code,
-						message = CommonErrorCode.BAD_REQUEST.getMessage(null),
+						message = CommonErrorCode.BAD_REQUEST.getMessage(emptyArray()),
 					)
 				else getInternalErrorRepose()
 			}
@@ -73,7 +73,7 @@ class CustomErrorAttributes: ErrorAttributes {
 
 	private fun getInternalErrorRepose() = CommonErrorResponse(
 		errorCode = CommonErrorCode.INTERNAL_ERROR.code,
-		message = CommonErrorCode.INTERNAL_ERROR.getMessage(null),
+		message = CommonErrorCode.INTERNAL_ERROR.getMessage(emptyArray()),
 	)
 	private fun getHttpStatus(error: Throwable): HttpStatus {
 		return when (error) {

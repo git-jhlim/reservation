@@ -2,15 +2,6 @@ package exception
 
 open class CommonException(
 	val errorCode: ErrorCode,
-	val arg: String = "",
-	open val detail: Map<String, Any> = emptyMap(),
-	override val message: String = errorCode.getMessage(arg),
+	val args: Array<Any?> = emptyArray(),
+	override val message: String = errorCode.getMessage(args),
 ): RuntimeException(message)
-
-class BadRequestException(
-	detail: Map<String, Any> = emptyMap(),
-): CommonException(
-	errorCode = CommonErrorCode.BAD_REQUEST,
-	arg = "",
-	detail = detail,
-)

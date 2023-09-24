@@ -9,8 +9,8 @@ enum class LectureErrorCode (
 ): ErrorCode {
     NOT_FOUND("LCCD0001", "lectureErrorCode.notFound"),
     ;
-
-    override fun getMessage(arg: String?): String {
-        return PropertiesMessage.getMessage(messageKey, arrayOf(arg))
+    
+    override fun getMessage(args: Array<Any?>): String {
+        return PropertiesMessage.getMessage(messageKey, args)
     }
 }

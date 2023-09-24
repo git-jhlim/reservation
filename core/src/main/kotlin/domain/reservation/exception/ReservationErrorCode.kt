@@ -12,7 +12,7 @@ enum class ReservationErrorCode(
 	EXCEEDED_RESERVATION("RVCD0003", "reservationErrorCode.exceededReservation"),
 	;
 	
-	override fun getMessage(arg: String?): String {
-		return PropertiesMessage.getMessage(messageKey, arrayOf(arg))
+	override fun getMessage(args: Array<Any?>): String {
+		return PropertiesMessage.getMessage(messageKey, args)
 	}
 }

@@ -10,6 +10,7 @@ import org.springframework.web.reactive.function.server.*
 class LectureHandler(private val lectureService: LectureService) {
     suspend fun create(request: ServerRequest): ServerResponse {
         val createRequest = request.awaitBody<LectureCreateRequest>()
+            .also { it.validate() }
 
         lectureService.create(createRequest.toLectureCreateModel())
         return ServerResponse.noContent().buildAndAwait()

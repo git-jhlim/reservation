@@ -2,6 +2,8 @@ package com.exam.backoffice.application.lecture
 
 import com.exam.backoffice.application.lecture.model.LectureCreateModel
 import com.exam.backoffice.application.lecture.model.LectureInfo
+import com.exam.backoffice.application.lecture.model.LectureSearchModel
+import common.PageResponse
 import domain.lecture.exception.LectureNotFoundException
 import domain.lecture.repository.LectureRepository
 import domain.reservation.repository.ReservationRepository
@@ -18,9 +20,9 @@ class LectureService(
         lectureRepository.save(createModel.toLecture())
     }
     @Transactional(readOnly = true)
-    suspend fun getLectures(): List<LectureInfo> {
-        return lectureRepository.findAll()
-            .map { LectureInfo.of(it) }
+    suspend fun getLectures(searchModel: LectureSearchModel): PageResponse<LectureInfo> {
+        return lectureRepository.getAllLectures(searchModel.toLectureSearchParams())
+            .let { results ->  PageResponse.convert(results){ LectureInfo.of(it) } }
     }
     
     @Transactional(readOnly = true)

@@ -48,7 +48,7 @@ class ReservationService(
             }
     }
     
-    @Transactional(readOnly = true)
+    @Transactional
     suspend fun cancelReservation(employeeId: String, reservationNo: Int) {
         val reservation = reservationRepository.findByNoAndEmployeeId(reservationNo, employeeId)
         

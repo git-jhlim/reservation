@@ -11,7 +11,7 @@ data class ReservationCreateRequest (
     fun toReservationCreateModel() = ReservationCreateModel(employeeId, lectureNo)
     
     fun validate() {
-        if(employeeId.length == EMPLOYEE_ID_LENGTH)
+        if(employeeId.length != EMPLOYEE_ID_LENGTH)
             throw InvalidArgumentException("employeeId")
     }
 }

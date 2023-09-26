@@ -4,6 +4,7 @@ import com.exam.front.application.reservation.ReservationService
 import com.exam.front.application.reservation.model.ReservationSearchModel
 import com.exam.front.presentation.resevation.model.ReservationCreateRequest
 import exception.InvalidArgumentException
+import extention.awaitBodyOrThrow
 import extention.queryParamOrThrow
 import extention.queryParamToIntOrNull
 import org.springframework.stereotype.Component
@@ -12,7 +13,7 @@ import org.springframework.web.reactive.function.server.*
 @Component
 class ReservationHandler(private val reservationService: ReservationService){
     suspend fun reserveLecture(request: ServerRequest): ServerResponse {
-        val createRequest = request.awaitBody<ReservationCreateRequest>()
+        val createRequest = request.awaitBodyOrThrow<ReservationCreateRequest>()
             .also { it.validate() }
 
         reservationService.reserveLecture(createRequest.toReservationCreateModel())

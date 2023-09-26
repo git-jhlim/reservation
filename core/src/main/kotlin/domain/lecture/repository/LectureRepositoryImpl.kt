@@ -27,10 +27,8 @@ class LectureRepositoryImpl: LectureRepositoryCustom, QuerydslRepositorySupport(
         val count = selectQuery
             .fetchCount()
 
-        val lectures =  from(tbLecture)
-            .where(
-                tbLecture.startDateTime.between(startDate, endDate)
-            ).orderBy(tbLecture.startDateTime.desc())
+        val lectures =  selectQuery
+            .orderBy(tbLecture.startDateTime.desc())
             .offset(searchParams.getOffset())
             .limit(searchParams.getLimit())
             .fetch()
@@ -42,7 +40,25 @@ class LectureRepositoryImpl: LectureRepositoryCustom, QuerydslRepositorySupport(
             contents = lectures,
         )
     }
-
+    
+    override fun getAllLectures(searchParams: LectureSearchParams): PageResponse<Lecture> {
+        val count = from(tbLecture)
+            .fetchCount()
+        
+        val lectures =  from(tbLecture)
+            .orderBy(tbLecture.no.desc())
+            .offset(searchParams.getOffset())
+            .limit(searchParams.getLimit())
+            .fetch()
+        
+        return PageResponse(
+            totalCount = count,
+            page = searchParams.page,
+            size = searchParams.size,
+            contents = lectures,
+        )
+    }
+    
     override fun existLecture(lectureNo: Int): Boolean {
         val result = from(tbLecture)
             .select(tbLecture.no)

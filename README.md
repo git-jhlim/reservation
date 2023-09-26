@@ -1,3 +1,5 @@
+### 개발 환경
+kotlin / spring / mysql / redis
 
 ### DB 구조
 CREATE TABLE `tb_lecture`
@@ -21,7 +23,6 @@ CREATE TABLE `tb_lecture_reservation`
     `update_date`         datetime     NULL COMMENT '수정일',
     `is_canceled`          boolean     NOT NULL COMMENT '취소 여부',
     PRIMARY KEY (`reservation_no`),
-    UNIQUE KEY UK_LECTURE_EMPLOYEE (`lecture_no`, `employee_id`)
 );
 
 CREATE TABLE `tb_lecture_accumulation`

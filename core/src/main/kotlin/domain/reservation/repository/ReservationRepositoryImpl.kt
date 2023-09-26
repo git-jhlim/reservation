@@ -58,7 +58,7 @@ class ReservationRepositoryImpl: ReservationRepositoryCustom, QuerydslRepository
                 )
             ).groupBy(tbReservation.lectureNo)
             .where(
-                tbReservation.registerDate.after(LocalDate.now().atStartOfDay())
+                tbReservation.registerDate.after(LocalDate.now().minusDays(3).atStartOfDay())
             ).fetch()
     }
 }

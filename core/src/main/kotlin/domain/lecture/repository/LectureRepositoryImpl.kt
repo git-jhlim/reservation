@@ -59,7 +59,7 @@ class LectureRepositoryImpl: LectureRepositoryCustom, QuerydslRepositorySupport(
         )
     }
     
-    override fun existLecture(lectureNo: Int): Boolean {
+    override fun existAvailableLecture(lectureNo: Int): Boolean {
         val result = from(tbLecture)
             .select(tbLecture.no)
             .where(
@@ -70,13 +70,22 @@ class LectureRepositoryImpl: LectureRepositoryCustom, QuerydslRepositorySupport(
         return result != null
     }
     
+    override fun existLecture(lectureNo: Int): Boolean {
+        val result = from(tbLecture)
+            .select(tbLecture.no)
+            .where(tbLecture.no.eq(lectureNo))
+            .fetchFirst()
+        
+        return result != null
+    }
+    
     override fun getAllOrderByReservationCnt(): List<Lecture> {
         val startDate = LocalDate.now().atStartOfDay()
         val endDate = LocalDate.now().plusDays(7).atEndOfDay()
         
         return from(tbLecture)
             .select(tbLecture)
-            .leftJoin(tbAccumulation)
+            .innerJoin(tbAccumulation)
             .on(tbLecture.no.eq(tbAccumulation.lectureNo))
             .where(
                 tbLecture.startDateTime.between(startDate, endDate)

@@ -2,7 +2,6 @@ package com.exam.backoffice.application.lecture
 
 import com.exam.backoffice.application.lecture.model.LectureCreateModel
 import com.exam.backoffice.application.lecture.model.LectureSearchModel
-import com.exam.backoffice.presentation.lecture.LectureHandler
 import common.PageResponse
 import domain.lecture.entity.Lecture
 import domain.lecture.exception.LectureErrorCode
@@ -10,17 +9,14 @@ import domain.lecture.exception.LectureNotFoundException
 import domain.lecture.repository.LectureRepository
 import domain.reservation.entity.Reservation
 import domain.reservation.repository.ReservationRepository
-import exception.InvalidFieldValueException
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
-import jakarta.persistence.Column
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
-import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @ExtendWith(MockKExtension::class)
@@ -93,7 +89,7 @@ class LectureServiceTest {
 	fun `강연 별 신청 사번 조회 시, 없는 강의번호 조회 시 exception`() {
 		val lectureNo = 1
 		
-		every { lectureRepository.existLecture(lectureNo) } returns false
+		every { lectureRepository.existAvailableLecture(lectureNo) } returns false
 		
 		val exception = assertThrows<LectureNotFoundException> {
 			runBlocking { lectureService.getAudiences(lectureNo) }
@@ -110,7 +106,7 @@ class LectureServiceTest {
 			Reservation(2, 1, "54321"),
 		)
 		
-		every { lectureRepository.existLecture(lectureNo) } returns true
+		every { lectureRepository.existAvailableLecture(lectureNo) } returns true
 		every { reservationRepository.findByLectureNo(lectureNo) } returns results
 		
 		val response = runBlocking { lectureService.getAudiences(lectureNo) }
